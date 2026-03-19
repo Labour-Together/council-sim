@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Run the Council — Labour Together</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Cabin', sans-serif;
+      background: #FFFFFF;
+      color: #1A1A1A;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── Brand ────────────────────────────────────── */
+    :root {
+      --red: #CC0000;
+      --red-dark: #A30000;
+      --red-light: rgba(204,0,0,0.07);
+      --red-border: rgba(204,0,0,0.2);
+      --grey: #F4F4F4;
+      --grey-border: #E0E0E0;
+      --muted: #666666;
+      --text: #1A1A1A;
+    }
+
+    /* ── Screens ──────────────────────────────────── */
+    .screen { display: none; min-height: 100vh; }
+    .screen.active { display: flex; flex-direction: column; }
+
+
+    /* ── Shared layout ────────────────────────────── */
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 72px 48px;
+      width: 100%;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: clamp(36px, 4.5vw, 60px);
+      font-weight: 700;
+      line-height: 1.06;
+      color: var(--text);
+      margin-bottom: 28px;
+      letter-spacing: -0.02em;
+    }
+    h1 span { color: var(--red); }
+    h2 {
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+    h2 span { color: var(--red); }
+    .body-text {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #444;
+      max-width: 580px;
+      margin-bottom: 40px;
+    }
+    .body-text strong { color: var(--text); font-weight: 600; }
+
+    /* ── Buttons ──────────────────────────────────── */
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--red);
+      color: #FFFFFF;
+      font-family: 'Cabin', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: var(--red-dark); }
+    .btn-primary:disabled { background: #CCCCCC; cursor: not-allowed; }
+
+    .btn-outline {
+      display: inline-block;
+      padding: 13px 28px;
+      background: transparent;
+      color: var(--text);
+      font-family: 'Cabin', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      border: 1.5px solid var(--grey-border);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .btn-outline:hover { border-color: #999; background: var(--grey); }
+
+    /* ── Screen 0: Intro ──────────────────────────── */
+    #screen-intro { background: #FFFFFF; }
+    #screen-intro .wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: calc(100vh - 57px);
+    }
+    .intro-rule {
+      width: 48px;
+      height: 4px;
+      background: var(--red);
+      margin-bottom: 32px;
+    }
+    .intro-meta {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--grey-border);
+      font-size: 11px;
+      color: #AAAAAA;
+      line-height: 1.7;
+    }
+
+    /* ── Screen 1: Budget ─────────────────────────── */
+    #screen-budget { background: #FFFFFF; }
+
+    .perception-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-bottom: 48px;
+    }
+    .perception-card {
+      background: var(--grey);
+      border: 1px solid var(--grey-border);
+      padding: 28px 28px;
+    }
+    .perception-card.highlight {
+      background: var(--red-light);
+      border-color: var(--red-border);
+    }
+    .p-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .perception-card.highlight .p-label { color: var(--red); }
+    .p-pct {
+      font-size: 60px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+      color: #CCCCCC;
+    }
+    .perception-card.highlight .p-pct { color: var(--red); }
+    .p-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .budget-bar {
+      display: flex;
+      height: 44px;
+      overflow: hidden;
+      gap: 1px;
+      margin-bottom: 14px;
+    }
+    .budget-seg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0 6px;
+    }
+    .budget-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      margin-bottom: 40px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      flex-shrink: 0;
+    }
+    .callout-box {
+      background: var(--red-light);
+      border-left: 3px solid var(--red);
+      padding: 20px 24px;
+      margin-bottom: 40px;
+    }
+    .callout-box p {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.7;
+    }
+    .callout-box strong { color: var(--text); }
+
+    /* ── Screen 2: Round ──────────────────────────── */
+    #screen-round { background: #FFFFFF; }
+
+    .year-bar {
+      background: var(--red);
+      padding: 12px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .year-bar .yb-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+    .year-bar .yb-year {
+      font-size: 14px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+    .year-pips {
+      display: flex;
+      gap: 6px;
+    }
+    .year-pip {
+      width: 28px;
+      height: 4px;
+      background: rgba(255,255,255,0.25);
+    }
+    .year-pip.done { background: #FFFFFF; }
+
+    .shortfall-card {
+      background: var(--red-light);
+      border: 1px solid var(--red-border);
+      padding: 28px 32px;
+      margin-bottom: 40px;
+    }
+    .sc-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+    .sc-amount {
+      font-size: 52px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--red);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .sc-desc { font-size: 14px; color: #555; line-height: 1.6; }
+
+    .decision-section { margin-bottom: 36px; }
+    .ds-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .ds-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .ct-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-bottom: 16px;
+    }
+    .ct-opt {
+      background: var(--grey);
+      border: 1.5px solid var(--grey-border);
+      padding: 20px 20px;
+      cursor: pointer;
+      transition: background 0.1s, border-color 0.1s;
+    }
+    .ct-opt:hover { background: #EBEBEB; border-color: #BBBBBB; }
+    .ct-opt.selected { background: var(--red-light); border-color: var(--red); }
+    .ct-pct {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .ct-opt.selected .ct-pct { color: var(--red); }
+    .ct-rev { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+    .ct-note { font-size: 11px; color: #AAAAAA; line-height: 1.5; }
+
+    .gap-indicator {
+      font-size: 14px;
+      color: #555;
+      padding: 14px 18px;
+      background: var(--grey);
+      border: 1px solid var(--grey-border);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .gap-num { color: var(--red); font-weight: 600; }
+    .gap-ok { color: #2A7A4F; font-weight: 600; }
+
+    .services-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-bottom: 16px;
+    }
+    .svc-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--grey);
+      border: 1.5px solid var(--grey-border);
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: background 0.1s, border-color 0.1s;
+    }
+    .svc-item:hover { background: #EBEBEB; }
+    .svc-item.selected { background: var(--red-light); border-color: var(--red); }
+    .svc-check {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid #CCCCCC;
+      flex-shrink: 0;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+    .svc-item.selected .svc-check { background: var(--red); border-color: var(--red); }
+    .svc-body { flex: 1; }
+    .svc-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+    .svc-consequence { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .svc-saving { font-size: 18px; font-weight: 700; color: #AAAAAA; flex-shrink: 0; white-space: nowrap; }
+    .svc-item.selected .svc-saving { color: var(--red); }
+
+    .round-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 28px;
+      border-top: 2px solid var(--grey-border);
+      margin-top: 8px;
+    }
+    .balance-note { font-size: 13px; color: var(--muted); }
+    .balance-note.balanced { color: #2A7A4F; font-weight: 500; }
+    .balance-note.over { color: var(--red); font-weight: 500; }
+
+    /* ── Screen 3: Outcome ────────────────────────── */
+    #screen-outcome { background: #FFFFFF; }
+
+    .outcome-hero {
+      background: var(--red);
+      padding: 56px 48px;
+      margin-bottom: 0;
+    }
+    .outcome-hero .tag { color: rgba(255,255,255,0.7); }
+    .outcome-hero h1 { color: #FFFFFF; }
+    .outcome-hero h1 span { color: rgba(255,255,255,0.5); }
+
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-bottom: 40px;
+    }
+    .outcome-stat {
+      background: var(--grey);
+      border: 1px solid var(--grey-border);
+      padding: 28px 28px;
+    }
+    .os-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .os-value {
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .os-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    .cuts-section { margin-bottom: 40px; }
+    .cuts-section .cs-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--text);
+    }
+    .cut-row {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--grey-border);
+    }
+    .cut-year {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--red);
+      flex-shrink: 0;
+      width: 44px;
+      padding-top: 1px;
+    }
+    .cut-body { flex: 1; }
+    .cut-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+    .cut-consequence { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    .verdict {
+      background: var(--text);
+      color: #FFFFFF;
+      padding: 40px 40px;
+      margin-bottom: 40px;
+    }
+    .verdict h3 {
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      margin-bottom: 16px;
+    }
+    .verdict h3 span { color: var(--red); }
+    .verdict p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.65);
+      max-width: 640px;
+    }
+    .verdict p + p { margin-top: 14px; }
+
+    .source-line {
+      font-size: 11px;
+      color: #AAAAAA;
+      line-height: 1.7;
+      padding-top: 24px;
+      border-top: 1px solid var(--grey-border);
+      margin-bottom: 32px;
+    }
+
+    /* ── Mini budget bar in round ─────────────────── */
+    .mini-budget-wrap { margin-bottom: 36px; }
+    .mini-budget-label { font-size: 11px; color: #AAAAAA; margin-bottom: 8px; }
+    .mini-budget { display: flex; height: 6px; gap: 1px; }
+    .mb-social { background: var(--red); transition: flex-basis 0.5s ease; }
+    .mb-children { background: rgba(204,0,0,0.3); flex-basis: 22%; }
+    .mb-other { background: #E0E0E0; flex: 1; }
+  </style>
+</head>
+<body>
+
+<!-- ══ SCREEN 0: INTRO ═══════════════════════════════════════ -->
+<div id="screen-intro" class="screen active">
+  <div class="wrap">
+    <div class="intro-rule"></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+      <img src="lt-logo.png" alt="Labour Together" style="height:28px;width:auto;">
+      <div class="tag" style="margin-bottom:0;">Run the Council</div>
+    </div>
+    <h1>Congratulations.<br><span>You're in charge.</span></h1>
+    <p class="body-text">
+      You've just been elected leader of Northfield Council. Population 280,000. Annual budget: <strong>£180 million</strong>.<br><br>
+      You want to fix the roads. Sort the parks. Keep the libraries open. Maybe actually collect the bins on time.<br><br>
+      You have four years. Good luck.
+    </p>
+    <button class="btn-primary" onclick="showBudget()">See your budget →</button>
+    <div class="intro-meta">
+      Based on real data from the Institute for Government Performance Tracker 2025 and Labour Together analysis.<br>
+      "Fixing the shop front of the state", Dan Mead with additional analysis by Dylan Cridland — Labour Together, March 2026.
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN 1: BUDGET ══════════════════════════════════════ -->
+<div id="screen-budget" class="screen">
+  <div class="wrap">
+    <div class="tag">Before you start</div>
+    <h2>Meet the item that<br><span>eats your budget.</span></h2>
+    <p class="body-text">Ask most people what councils spend their money on and they'll say bins, roads, parks. Here's the gap between what residents think — and what's actually true.</p>
+
+    <div class="perception-row">
+      <div class="perception-card">
+        <div class="p-label">What residents think councils spend on adult social care</div>
+        <div class="p-pct">13%</div>
+        <div class="p-desc">Average estimate from nationally representative polling of 1,697 adults, August 2025</div>
+      </div>
+      <div class="perception-card highlight">
+        <div class="p-label">What councils actually spend on adult social care</div>
+        <div class="p-pct">39%</div>
+        <div class="p-desc">The single largest item in almost every council budget in England</div>
+      </div>
+    </div>
+
+    <div class="section-label">Where your £180m goes</div>
+    <div class="budget-bar">
+      <div class="budget-seg" style="flex-basis:39%;background:var(--red);color:#fff;">39%</div>
+      <div class="budget-seg" style="flex-basis:22%;background:rgba(204,0,0,0.35);color:#fff;">22%</div>
+      <div class="budget-seg" style="flex-basis:10%;background:#CCCCCC;color:#fff;">10%</div>
+      <div class="budget-seg" style="flex-basis:7%;background:#DDDDDD;">7%</div>
+      <div class="budget-seg" style="flex-basis:7%;background:#E5E5E5;"></div>
+      <div class="budget-seg" style="flex-basis:4%;background:#EBEBEB;"></div>
+      <div class="budget-seg" style="flex-basis:4%;background:#F0F0F0;"></div>
+      <div class="budget-seg" style="flex-basis:4%;background:#F4F4F4;"></div>
+      <div class="budget-seg" style="flex-basis:3%;background:#F8F8F8;"></div>
+    </div>
+    <div class="budget-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Adult social care (£70m)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(204,0,0,0.35)"></div>Children's social care (£40m)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#CCCCCC"></div>Environmental services (£18m)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#DDDDDD"></div>Central & admin (£13m)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#E5E5E5"></div>Highways & transport (£12m)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#EBEBEB"></div>Libraries & culture (£7m)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#F0F0F0"></div>Public health (£7m)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#F4F4F4"></div>Other (£13m)</div>
+    </div>
+
+    <div class="callout-box">
+      <p>Adult social care costs have grown at around <strong>7% per year</strong> for the past decade. An ageing population means more people need care. You cannot reduce demand. You can only find the money — and your only local lever is council tax, legally capped at <strong>5% per year</strong> without a referendum.</p>
+    </div>
+
+    <button class="btn-primary" onclick="startGame()">Start Year 1 →</button>
+  </div>
+</div>
+
+<!-- ══ SCREEN 2: ROUND ═══════════════════════════════════════ -->
+<div id="screen-round" class="screen">
+  <div class="year-bar">
+    <div class="yb-label">Progress</div>
+    <div class="year-pips" id="year-pips">
+      <div class="year-pip" id="pip-1"></div>
+      <div class="year-pip" id="pip-2"></div>
+      <div class="year-pip" id="pip-3"></div>
+      <div class="year-pip" id="pip-4"></div>
+    </div>
+    <div class="yb-year" id="yb-year">Year 1</div>
+  </div>
+  <div class="wrap">
+    <div class="tag" id="round-tag">Year 1 — 2025/26</div>
+    <h2>Social care demand<br><span>has risen. Again.</span></h2>
+
+    <div class="shortfall-card">
+      <div class="sc-label">This year's social care overspend</div>
+      <div class="sc-amount" id="sc-amount">£4.9m</div>
+      <div class="sc-desc" id="sc-desc">More people need care than last year. Costs have risen 7%. You must find this money.</div>
+    </div>
+
+    <div class="mini-budget-wrap">
+      <div class="mini-budget-label">Social care share of total budget (growing)</div>
+      <div class="mini-budget">
+        <div class="mb-social" id="mb-social" style="flex-basis:39%"></div>
+        <div class="mb-children"></div>
+        <div class="mb-other"></div>
+      </div>
+    </div>
+
+    <div class="decision-section">
+      <div class="ds-title">Step 1 — Raise council tax?</div>
+      <div class="ds-sub">You are legally capped at 5% without a local referendum. In 2025/26, 350 out of 384 councils in England raised it by close to the maximum.</div>
+      <div class="ct-options">
+        <div class="ct-opt" onclick="selectTax(0)" id="ct-0">
+          <div class="ct-pct">0%</div>
+          <div class="ct-rev">+£0</div>
+          <div class="ct-note">Freeze — popular but solves nothing</div>
+        </div>
+        <div class="ct-opt" onclick="selectTax(1)" id="ct-1">
+          <div class="ct-pct">2.5%</div>
+          <div class="ct-rev" id="ct-rev-1">+£2.1m</div>
+          <div class="ct-note">Half the permitted rise</div>
+        </div>
+        <div class="ct-opt" onclick="selectTax(2)" id="ct-2">
+          <div class="ct-pct">5%</div>
+          <div class="ct-rev" id="ct-rev-2">+£4.2m</div>
+          <div class="ct-note">Maximum permitted — no referendum needed</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="decision-section">
+      <div class="ds-title">Step 2 — Cover the remaining gap</div>
+      <div class="gap-indicator" id="gap-indicator">Select a council tax rise above to see the remaining gap.</div>
+      <div class="services-list" id="services-list"></div>
+    </div>
+
+    <div class="round-footer">
+      <div class="balance-note" id="balance-note">Pick a council tax rise to continue.</div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn-outline" onclick="showScreen('screen-intro')">↺ Restart</button>
+        <button class="btn-primary" id="next-round-btn" onclick="nextRound()" disabled>Next year →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN 3: OUTCOME ═════════════════════════════════════ -->
+<div id="screen-outcome" class="screen">
+  <div class="outcome-hero">
+    <div class="tag">Four years later</div>
+    <h1>Here's what you<br><span>managed.</span></h1>
+  </div>
+  <div class="wrap">
+    <div class="outcome-grid">
+      <div class="outcome-stat">
+        <div class="os-label">Council tax rise over 4 years</div>
+        <div class="os-value" id="out-tax-rise" style="color:var(--red)">—</div>
+        <div class="os-desc" id="out-tax-desc">—</div>
+      </div>
+      <div class="outcome-stat">
+        <div class="os-label">Services cut</div>
+        <div class="os-value" id="out-cuts-total" style="color:var(--red)">—</div>
+        <div class="os-desc">Services reduced or removed to plug the social care gap</div>
+      </div>
+      <div class="outcome-stat">
+        <div class="os-label">Social care share of budget now</div>
+        <div class="os-value" id="out-social-pct" style="color:var(--red)">—</div>
+        <div class="os-desc">Up from 39% when you took office</div>
+      </div>
+      <div class="outcome-stat">
+        <div class="os-label">Total social care demand growth absorbed</div>
+        <div class="os-value" id="out-total-overspend" style="color:var(--red)">—</div>
+        <div class="os-desc">Unavoidable — driven entirely by demographic demand</div>
+      </div>
+    </div>
+
+    <div class="cuts-section">
+      <div class="cs-label">Services cut on your watch</div>
+      <div id="cuts-record"></div>
+    </div>
+
+    <div class="verdict">
+      <h3>This isn't a management problem.<br><span>It's a structural one.</span></h3>
+      <p>Every council in England faces the same squeeze. In 2025/26, 350 out of 384 councils raised council tax by the maximum permitted — not because they wanted to, but because social care costs left them no choice.</p>
+      <p>Even at maximum council tax every year, a typical council cannot cover social care demand growth. The gap must come from visible services. The bins, the libraries, the parks — these aren't cut because of waste or incompetence. They're cut because adult social care is a national problem being solved with a local tax.</p>
+    </div>
+
+    <div class="source-line">
+      Data sources: Institute for Government Performance Tracker 2025 · Labour Together polling (Aug 2025, n=1,697) · Council Tax levels set by local authorities in England 2025–26, GOV.UK · "Fixing the shop front of the state", Labour Together, March 2026 — Dan Mead, with additional analysis by Dylan Cridland
+    </div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <button class="btn-primary" onclick="restartGame()">Try again</button>
+      <button class="btn-outline" onclick="showScreen('screen-intro')">Start over</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const YEARS = 4;
+const SOCIAL_CARE_START = 70;
+const SOCIAL_CARE_GROWTH = 0.07;
+const CT_BASE_START = 83;
+
+const YEAR_LABELS = ['2025/26','2026/27','2027/28','2028/29'];
+
+const ALL_SERVICES = [
+  { id: 'garden',    label: 'Charge for garden waste collection',  saving: 0.8,  consequence: 'Residents now pay £55/year for collection that used to be free' },
+  { id: 'libraries', label: 'Close 2 local libraries',             saving: 1.1,  consequence: '2 libraries closed permanently — 34,000 annual visits lost' },
+  { id: 'parks',     label: 'Reduce park maintenance',             saving: 0.9,  consequence: 'Grass uncut, ageing play equipment not replaced' },
+  { id: 'potholes',  label: 'Pause non-urgent pothole repairs',    saving: 1.3,  consequence: 'Road quality deteriorates; long-term repair costs rise' },
+  { id: 'buses',     label: 'Cut subsidised bus routes',           saving: 1.0,  consequence: 'Evening and rural services cut — affects those without cars most' },
+  { id: 'arts',      label: 'Close arts centre & cancel events',   saving: 0.8,  consequence: 'Arts centre hours cut; annual festival cancelled' },
+  { id: 'planning',  label: 'Reduce planning department',          saving: 0.7,  consequence: 'Planning decisions take 6+ months longer; development slows' },
+  { id: 'youth',     label: 'Cut youth services',                  saving: 0.6,  consequence: 'Youth clubs and drop-in centres closed across the borough' },
+];
+
+let state = {};
+
+function resetState() {
+  return {
+    year: 1,
+    socialCare: SOCIAL_CARE_START,
+    ctBase: CT_BASE_START,
+    selectedTax: null,
+    selectedCuts: new Set(),
+    cumulativeTaxPct: 0,
+    allCuts: [],
+    totalCutsSaved: 0,
+    totalOverspend: 0,
+    availableServices: ALL_SERVICES.map(s => s.id),
+  };
+}
+
+function shortfall() {
+  return parseFloat((state.socialCare * SOCIAL_CARE_GROWTH).toFixed(2));
+}
+
+function ctRevenue(optIdx) {
+  const pcts = [0, 0.025, 0.05];
+  return parseFloat((state.ctBase * pcts[optIdx]).toFixed(2));
+}
+
+function cutsCovered() {
+  return [...state.selectedCuts].reduce((sum, id) => {
+    const s = ALL_SERVICES.find(x => x.id === id);
+    return sum + (s ? s.saving : 0);
+  }, 0);
+}
+
+function remainingGap() {
+  if (state.selectedTax === null) return null;
+  return parseFloat((shortfall() - ctRevenue(state.selectedTax) - cutsCovered()).toFixed(2));
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showBudget() { showScreen('screen-budget'); }
+
+function startGame() {
+  state = resetState();
+  renderRound();
+  showScreen('screen-round');
+}
+
+function restartGame() {
+  state = resetState();
+  renderRound();
+  showScreen('screen-round');
+}
+
+function renderRound() {
+  const sf = shortfall();
+  state.selectedTax = null;
+  state.selectedCuts = new Set();
+
+  const yearLabel = YEAR_LABELS[state.year - 1];
+document.getElementById('round-tag').textContent = `Year ${state.year} — ${yearLabel}`;
+  document.getElementById('yb-year').textContent = `Year ${state.year}`;
+
+  // Progress pips
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById(`pip-${i}`).className = 'year-pip' + (i < state.year ? ' done' : '');
+  }
+
+  document.getElementById('sc-amount').textContent = `£${sf.toFixed(1)}m`;
+  document.getElementById('sc-desc').textContent =
+    `More people need care than last year. Social care costs have risen 7%, adding £${sf.toFixed(1)}m to your bill. You must find this money.`;
+
+  const socialPct = Math.round((state.socialCare / 180) * 100);
+  document.getElementById('mb-social').style.flexBasis = socialPct + '%';
+
+  document.getElementById('ct-rev-1').textContent = `+£${ctRevenue(1).toFixed(1)}m`;
+  document.getElementById('ct-rev-2').textContent = `+£${ctRevenue(2).toFixed(1)}m`;
+
+  [0,1,2].forEach(i => document.getElementById(`ct-${i}`).classList.remove('selected'));
+  document.getElementById('gap-indicator').innerHTML = 'Select a council tax rise above to see the remaining gap.';
+  document.getElementById('balance-note').textContent = 'Pick a council tax rise to continue.';
+  document.getElementById('balance-note').className = 'balance-note';
+  document.getElementById('next-round-btn').disabled = true;
+  document.getElementById('next-round-btn').textContent = 'Next year →';
+
+  renderServicesList();
+}
+
+function renderServicesList() {
+  const list = document.getElementById('services-list');
+  list.innerHTML = '';
+  const available = ALL_SERVICES.filter(s => state.availableServices.includes(s.id));
+
+  available.forEach(svc => {
+    const item = document.createElement('div');
+    item.className = 'svc-item' + (state.selectedCuts.has(svc.id) ? ' selected' : '');
+    item.onclick = () => toggleCut(svc.id);
+    item.innerHTML = `
+      <div class="svc-check">${state.selectedCuts.has(svc.id) ? '✓' : ''}</div>
+      <div class="svc-body">
+        <div class="svc-name">${svc.label}</div>
+        <div class="svc-consequence">${svc.consequence}</div>
+      </div>
+      <div class="svc-saving">£${svc.saving.toFixed(1)}m</div>
+    `;
+    list.appendChild(item);
+  });
+
+  if (available.length === 0) {
+    list.innerHTML = '<div style="font-size:13px;color:#AAAAAA;padding:12px 0;">No further services available to cut.</div>';
+  }
+}
+
+function selectTax(idx) {
+  state.selectedTax = idx;
+  state.selectedCuts = new Set();
+  [0,1,2].forEach(i => document.getElementById(`ct-${i}`).classList.toggle('selected', i === idx));
+  updateGap();
+  renderServicesList();
+}
+
+function toggleCut(id) {
+  if (state.selectedTax === null) return;
+  if (state.selectedCuts.has(id)) {
+    state.selectedCuts.delete(id);
+  } else {
+    state.selectedCuts.add(id);
+  }
+  updateGap();
+  renderServicesList();
+}
+
+function updateGap() {
+  if (state.selectedTax === null) return;
+  const gap = remainingGap();
+  const indicator = document.getElementById('gap-indicator');
+  const note = document.getElementById('balance-note');
+  const btn = document.getElementById('next-round-btn');
+
+  if (gap > 0.05) {
+    indicator.innerHTML = `Remaining gap: <span class="gap-num">£${gap.toFixed(1)}m</span> — select cuts below, or proceed and carry the deficit into next year.`;
+    note.textContent = `£${gap.toFixed(1)}m still unresolved.`;
+    note.className = 'balance-note over';
+    btn.disabled = false;
+    btn.textContent = gap > 0.5 ? 'Continue with deficit →' : 'Next year →';
+  } else {
+    indicator.innerHTML = `<span class="gap-ok">Budget balanced</span> — you've covered the shortfall for this year.`;
+    note.textContent = 'Budget balanced.';
+    note.className = 'balance-note balanced';
+    btn.disabled = false;
+    btn.textContent = state.year < YEARS ? 'Next year →' : 'See the outcome →';
+  }
+}
+
+function nextRound() {
+  if (state.selectedTax === null) return;
+  const pcts = [0, 2.5, 5];
+  state.cumulativeTaxPct += pcts[state.selectedTax];
+  state.ctBase = parseFloat((state.ctBase * (1 + pcts[state.selectedTax] / 100)).toFixed(2));
+
+  state.selectedCuts.forEach(id => {
+    const svc = ALL_SERVICES.find(s => s.id === id);
+    if (svc) {
+      state.allCuts.push({ ...svc, year: state.year, yearLabel: YEAR_LABELS[state.year - 1] });
+      state.totalCutsSaved += svc.saving;
+      state.availableServices = state.availableServices.filter(x => x !== id);
+    }
+  });
+
+  state.totalOverspend += shortfall();
+  state.socialCare = parseFloat((state.socialCare * (1 + SOCIAL_CARE_GROWTH)).toFixed(2));
+
+  if (state.year < YEARS) {
+    state.year++;
+    renderRound();
+  } else {
+    showOutcome();
+  }
+}
+
+function showOutcome() {
+  const finalSocialPct = Math.round((state.socialCare / 180) * 100);
+  document.getElementById('out-tax-rise').textContent =
+    state.cumulativeTaxPct > 0 ? `+${state.cumulativeTaxPct.toFixed(0)}%` : 'Frozen';
+  document.getElementById('out-tax-desc').textContent =
+    state.cumulativeTaxPct >= 20
+      ? 'Maximum permitted over 4 years. Residents are paying significantly more for fewer services.'
+      : state.cumulativeTaxPct === 0
+      ? 'You froze council tax. Residents noticed. The books did too.'
+      : 'A partial rise — some pressure absorbed, not all of it.';
+
+  document.getElementById('out-cuts-total').textContent =
+    state.allCuts.length > 0 ? `${state.allCuts.length}` : '0';
+  document.getElementById('out-social-pct').textContent = finalSocialPct + '%';
+  document.getElementById('out-total-overspend').textContent = `£${state.totalOverspend.toFixed(1)}m`;
+
+  const cutsEl = document.getElementById('cuts-record');
+  if (state.allCuts.length === 0) {
+    cutsEl.innerHTML = '<div class="cut-row"><div class="cut-body"><div class="cut-name" style="color:#AAAAAA;">No services cut — you may be carrying a deficit. That bill comes later.</div></div></div>';
+  } else {
+    cutsEl.innerHTML = state.allCuts.map(c => `
+      <div class="cut-row">
+        <div class="cut-year">${c.yearLabel}</div>
+        <div class="cut-body">
+          <div class="cut-name">${c.label}</div>
+          <div class="cut-consequence">${c.consequence}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  showScreen('screen-outcome');
+}
+</script>
+</body>
+</html>
