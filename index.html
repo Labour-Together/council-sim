@@ -790,6 +790,41 @@
   </div>
 </div>
 
+<!-- ══ SCREEN: SECTION 114 ═══════════════════════════════════ -->
+<div id="screen-s114" class="screen">
+  <div class="election-bar" style="background:#1A1A1A;">
+    <div class="election-bar-inner">
+      <div class="tag" style="color:rgba(255,255,255,0.55);">Financial Emergency — Year <span id="s114-year"></span></div>
+      <div class="election-bar-headline">Section 114 notice<br>has been issued.</div>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="election-narrative">Northfield's Section 151 officer has issued a Section 114 notice. After three consecutive years of unresolved deficits, the council can no longer demonstrate a balanced budget. All new spending is frozen. Government-appointed commissioners are taking control.</p>
+    <div class="election-divider"></div>
+    <div class="election-verdict">
+      <p class="ev-quote">This isn't a failure of leadership. It's what happens when national demand meets local funding.</p>
+      <p class="ev-body">Birmingham, Nottingham, Woking, Thurrock. Section 114 is no longer rare. Every council that has issued one faced the same structural problem: social care costs that couldn't be met by a council tax that was legally capped.</p>
+    </div>
+    <div class="outcome-grid" style="margin-bottom:32px;">
+      <div class="outcome-stat">
+        <div class="os-label">Deficit this year</div>
+        <div class="os-value" id="s114-deficit" style="color:var(--red);">—</div>
+        <div class="os-desc">The unresolved shortfall that triggered the notice</div>
+      </div>
+      <div class="outcome-stat">
+        <div class="os-label">Services cut</div>
+        <div class="os-value" id="s114-cuts" style="color:var(--red);">—</div>
+        <div class="os-desc">Reductions made before the books became unmanageable</div>
+      </div>
+    </div>
+    <a href="https://www.labourtogether.uk/all-reports/big-bang-reform-for-local-govt" target="_blank" class="paper-link">Read the full paper: Big Bang Reform for Local Government →</a>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;">
+      <button class="btn-primary" onclick="restartGame()">Try again</button>
+      <button class="btn-outline" onclick="showScreen('screen-intro')">Start over</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ SCREEN 5: OUTCOME ═════════════════════════════════════ -->
 <div id="screen-outcome" class="screen">
   <div class="outcome-hero">
@@ -899,9 +934,59 @@ const SERVICE_QUIPS = {
 };
 
 const CT_QUIPS = {
-  5:   ['press',  'Northfield Mail',    'Council tax to rise by 5% AGAIN — residents ask "what are we paying for?"'],
-  2.5: ['press',  'Northfield Gazette', 'Council tax rise of 2.5% agreed despite resident opposition at public meeting'],
+  5: {
+    pool: [
+      ['press',  'Northfield Mail',    'Council tax to rise 5% — maximum permitted increase agreed amid social care pressures'],
+      ['press',  'Northfield Gazette', '"What are we actually getting for this?" — residents react to 5% council tax rise'],
+      ['social', 'Northfield Residents (Facebook)', '"Council tax up AGAIN. Roads are a disgrace, libraries closing, parks neglected. Where does the money go?" — 1.8k likes, 432 comments'],
+      ['radio',  'BBC Radio Northfield', '"The phones have been busy all morning after the council confirmed a 5% rise — we\'re taking your calls"'],
+    ],
+    contrast: {
+      0:   ['press', 'Northfield Mail',    'Council U-turns with maximum 5% rise after last year\'s freeze — residents demand answers'],
+      2.5: ['press', 'Northfield Gazette', 'Council opts for maximum rise after more cautious approach last year'],
+    },
+  },
+  2.5: {
+    pool: [
+      ['press',  'Northfield Mail',    'Council tax to rise 2.5% — below the maximum but residents still feel the pinch'],
+      ['press',  'Northfield Gazette', '2.5% rise agreed as council cites unavoidable social care pressures'],
+      ['social', 'Northfield Residents (Facebook)', '"2.5% might sound small but it adds up every year. When does it stop?" — 743 likes'],
+      ['radio',  'BBC Radio Northfield', '"2.5% rise confirmed at last night\'s full council meeting — opposition says it\'s still too much"'],
+    ],
+    contrast: {
+      0:   ['press', 'Northfield Mail',    'Council breaks tax freeze with 2.5% rise — citing unavoidable social care pressures'],
+      5:   ['press', 'Northfield Gazette', 'Council pulls back from maximum tax rise — but residents still paying more year on year'],
+    },
+  },
+  0: {
+    pool: [
+      ['press',  'Northfield Mail',    'Council freezes council tax — but critics warn the books don\'t add up'],
+      ['press',  'Northfield Gazette', 'Tax freeze welcomed by residents — council silent on how it will cover social care gap'],
+      ['social', 'Northfield Residents (Facebook)', '"Finally — a year without a council tax rise. Let\'s see how long it lasts." — 1.1k likes'],
+      ['radio',  'BBC Radio Northfield', '"No council tax rise this year — but finance officers have raised concerns about the long-term position"'],
+    ],
+    contrast: {
+      5:   ['press', 'Northfield Mail',    'Surprise tax freeze after maximum rise last year — but questions remain over how the gap will be filled'],
+      2.5: ['press', 'Northfield Gazette', 'Council freezes tax after last year\'s rise — opposition asks how the shortfall will be covered'],
+    },
+  },
 };
+
+const DEFICIT_REACTIONS = [
+  ['press',  'Northfield Mail',    'Council finances \'under strain\' as shortfall carried into next year — officers monitoring position closely'],
+  ['press',  'Northfield Gazette', 'Warning signs at Northfield Council as deficit grows for second consecutive year — opposition calls for full audit'],
+  ['radio',  'BBC Radio Northfield', '"Finance officers have issued a formal warning. Northfield\'s deficit is growing for the third year running — we discuss what a Section 114 notice would mean for the borough"'],
+];
+
+function getCTQuip(taxPct) {
+  const entry = CT_QUIPS[taxPct];
+  if (!entry) return null;
+  const last = state.lastTaxPct;
+  if (last !== null && last !== taxPct && entry.contrast && entry.contrast[last]) {
+    return entry.contrast[last];
+  }
+  return entry.pool[Math.floor(Math.random() * entry.pool.length)];
+}
 
 let state = {};
 
@@ -917,6 +1002,8 @@ function resetState() {
     totalCutsSaved: 0,
     totalOverspend: 0,
     deficit: 0,
+    deficitYears: 0,
+    lastTaxPct: null,
     satisfaction: 60,
     availableServices: ALL_SERVICES.map(s => s.id),
   };
@@ -1093,25 +1180,41 @@ function nextRound() {
   const gap = remainingGap();
   if (gap > 0.05) {
     state.deficit = gap;
+    state.deficitYears++;
     state.satisfaction -= 5;
   } else {
     state.deficit = 0;
+    state.deficitYears = 0;
   }
 
+  state.lastTaxPct = taxPct;
   state.totalOverspend += parseFloat((state.socialCare * SOCIAL_CARE_GROWTH).toFixed(2));
   state.socialCare = parseFloat((state.socialCare * (1 + SOCIAL_CARE_GROWTH)).toFixed(2));
 
   // Build reactions for this year
   const reactions = [];
-  if (taxPct > 0 && CT_QUIPS[taxPct]) {
-    reactions.push(CT_QUIPS[taxPct]);
-  }
-  yearCuts.forEach(id => {
-    if (SERVICE_QUIPS[id]) {
-      reactions.push(SERVICE_QUIPS[id][0]);
-      if (SERVICE_QUIPS[id][1]) reactions.push(SERVICE_QUIPS[id][1]);
+
+  // CT quip — contrast-aware, random pool otherwise
+  const ctQuip = getCTQuip(taxPct);
+  if (ctQuip) reactions.push(ctQuip);
+
+  // Service reactions — top 3 by saving, 1 random quip each
+  const topCuts = yearCuts
+    .map(id => ALL_SERVICES.find(s => s.id === id))
+    .filter(Boolean)
+    .sort((a, b) => b.saving - a.saving)
+    .slice(0, 3);
+  topCuts.forEach(svc => {
+    const quips = SERVICE_QUIPS[svc.id];
+    if (quips && quips.length) {
+      reactions.push(quips[Math.floor(Math.random() * quips.length)]);
     }
   });
+
+  // Deficit reaction
+  if (state.deficitYears > 0) {
+    reactions.push(DEFICIT_REACTIONS[Math.min(state.deficitYears - 1, DEFICIT_REACTIONS.length - 1)]);
+  }
 
   showReview(reactions, gap > 0.05 ? gap : 0);
 }
@@ -1160,6 +1263,10 @@ function showReview(reactions, deficitAmount) {
 }
 
 function proceedFromReview() {
+  if (state.deficitYears >= 3) {
+    showSection114();
+    return;
+  }
   if (state.year < YEARS) {
     state.year++;
     renderRound();
@@ -1167,6 +1274,13 @@ function proceedFromReview() {
   } else {
     showElection();
   }
+}
+
+function showSection114() {
+  document.getElementById('s114-year').textContent = state.year;
+  document.getElementById('s114-deficit').textContent = `£${state.deficit.toFixed(1)}m`;
+  document.getElementById('s114-cuts').textContent = state.allCuts.length;
+  showScreen('screen-s114');
 }
 
 function showElection() {
