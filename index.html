@@ -229,23 +229,25 @@
     #screen-round { background: #FFFFFF; }
 
     .year-bar {
-      background: var(--red);
-      padding: 12px 48px;
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 40px 48px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     .year-bar .yb-label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
+      color: var(--muted);
     }
     .year-bar .yb-year {
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 700;
-      color: #FFFFFF;
+      color: var(--text);
     }
     .year-pips {
       display: flex;
@@ -253,10 +255,10 @@
     }
     .year-pip {
       width: 28px;
-      height: 4px;
-      background: rgba(255,255,255,0.25);
+      height: 3px;
+      background: var(--grey-border);
     }
-    .year-pip.done { background: #FFFFFF; }
+    .year-pip.done { background: var(--red); }
 
     .shortfall-card {
       background: var(--red-light);
@@ -701,6 +703,7 @@
     </div>
     <div class="yb-year" id="yb-year">Year 1</div>
   </div>
+  <div class="wrap" style="padding-top:32px;">
   <div class="wrap">
     <div class="tag" id="round-tag">Year 1 — 2025/26</div>
     <h2>Social care demand<br><span>has risen. Again.</span></h2>
@@ -770,7 +773,7 @@
     </div>
     <div class="yb-year" id="review-yb-year">Year 1</div>
   </div>
-  <div class="wrap">
+  <div class="wrap" style="padding-top:32px;">
     <div class="tag" id="review-tag">Year 1 — How Northfield responded</div>
     <h2>Here's what <span>people are saying.</span></h2>
     <div class="reaction-feed" id="reaction-feed"></div>
