@@ -953,6 +953,13 @@ function showScreen(id) {
   });
 }
 
+// Send initial height on load
+window.addEventListener('load', () => {
+  requestAnimationFrame(() => {
+    window.parent.postMessage({ iframeHeight: document.body.scrollHeight }, '*');
+  });
+});
+
 function showBudget() { showScreen('screen-budget'); }
 function startGame()  { state = resetState(); renderRound(); showScreen('screen-round'); }
 function restartGame(){ state = resetState(); renderRound(); showScreen('screen-round'); }
