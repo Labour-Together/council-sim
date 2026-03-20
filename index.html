@@ -479,6 +479,19 @@
     }
     .verdict p + p { margin-top: 14px; }
 
+    .paper-link {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--red);
+      text-decoration: none;
+      border-bottom: 2px solid var(--red-border);
+      padding-bottom: 2px;
+      margin-bottom: 40px;
+      transition: border-color 0.2s;
+    }
+    .paper-link:hover { border-color: var(--red); }
+
     .source-line {
       font-size: 11px;
       color: #AAAAAA;
@@ -495,6 +508,93 @@
     .mb-social { background: var(--red); transition: flex-basis 0.5s ease; }
     .mb-children { background: rgba(204,0,0,0.3); flex-basis: 22%; }
     .mb-other { background: #E0E0E0; flex: 1; }
+
+    /* ── Review screen ────────────────────────────── */
+    .reaction-feed { display: flex; flex-direction: column; gap: 2px; margin-bottom: 36px; }
+    .reaction-item {
+      background: var(--grey);
+      border: 1px solid var(--grey-border);
+      padding: 18px 20px;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.6;
+    }
+    .reaction-item .r-source {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .reaction-item.social { border-left: 3px solid #1877F2; }
+    .reaction-item.press  { border-left: 3px solid var(--text); }
+    .reaction-item.radio  { border-left: 3px solid #E8A020; }
+    .deficit-warning {
+      background: var(--red-light);
+      border: 1px solid var(--red-border);
+      padding: 20px 24px;
+      margin-bottom: 32px;
+    }
+    .deficit-warning .dw-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 8px;
+    }
+    .deficit-warning p { font-size: 14px; color: #333; line-height: 1.6; }
+
+    /* ── Election screen ──────────────────────────── */
+    #screen-election { background: #FFFFFF; }
+    .election-bar {
+      background: var(--red);
+      padding: 48px 48px 40px;
+    }
+    .election-bar-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .election-bar .tag { color: rgba(255,255,255,0.7); margin-bottom: 16px; }
+    .election-bar-headline {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .election-narrative {
+      font-size: 17px;
+      line-height: 1.85;
+      color: var(--text);
+      max-width: 640px;
+      margin-bottom: 40px;
+      padding-top: 48px;
+    }
+    .election-divider {
+      width: 48px;
+      height: 3px;
+      background: var(--red);
+      margin-bottom: 40px;
+    }
+    .election-verdict { margin-bottom: 48px; }
+    .ev-quote {
+      font-size: clamp(22px, 2.8vw, 34px);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 20px;
+      max-width: 600px;
+    }
+    .ev-body {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 580px;
+    }
   </style>
 </head>
 <body>
@@ -642,7 +742,55 @@
   </div>
 </div>
 
-<!-- ══ SCREEN 3: OUTCOME ═════════════════════════════════════ -->
+<!-- ══ SCREEN 3: REVIEW ══════════════════════════════════════ -->
+<div id="screen-review" class="screen">
+  <div class="year-bar">
+    <div class="yb-label">Local reaction</div>
+    <div class="year-pips" id="review-pips">
+      <div class="year-pip" id="rpip-1"></div>
+      <div class="year-pip" id="rpip-2"></div>
+      <div class="year-pip" id="rpip-3"></div>
+      <div class="year-pip" id="rpip-4"></div>
+    </div>
+    <div class="yb-year" id="review-yb-year">Year 1</div>
+  </div>
+  <div class="wrap">
+    <div class="tag" id="review-tag">Year 1 — How Northfield responded</div>
+    <h2>Here's what <span>people are saying.</span></h2>
+    <div class="reaction-feed" id="reaction-feed"></div>
+    <div class="deficit-warning" id="deficit-warning" style="display:none">
+      <div class="dw-label">Deficit carried forward</div>
+      <p id="deficit-warning-text"></p>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn-outline" onclick="showScreen('screen-intro')">↺ Restart</button>
+      <button class="btn-primary" id="review-next-btn" onclick="proceedFromReview()">Next year →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN 4: ELECTION ════════════════════════════════════ -->
+<div id="screen-election" class="screen">
+  <div class="election-bar">
+    <div class="election-bar-inner">
+      <div class="tag">Election Night — 2029</div>
+      <div class="election-bar-headline">The people of Northfield<br>have voted.</div>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="election-narrative" id="election-narrative"></p>
+    <div class="election-divider"></div>
+    <div class="election-verdict">
+      <p class="ev-quote">No council leader in England can win this game under the current funding system.</p>
+      <p class="ev-body">Social care demand grows faster than council tax can rise. The gap always has to come from somewhere. The question isn't whether to cut — it's which residents you cut for.</p>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <button class="btn-primary" onclick="showOutcome()">See your four years →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN 5: OUTCOME ═════════════════════════════════════ -->
 <div id="screen-outcome" class="screen">
   <div class="outcome-hero">
     <div class="tag">Four years later</div>
@@ -683,6 +831,8 @@
       <p>Even at maximum council tax every year, a typical council cannot cover social care demand growth. The gap must come from visible services. The bins, the libraries, the parks — these aren't cut because of waste or incompetence. They're cut because adult social care is a national problem being solved with a local tax.</p>
     </div>
 
+    <a href="https://www.labourtogether.uk/all-reports/big-bang-reform-for-local-govt" target="_blank" class="paper-link">Read the full paper: Big Bang Reform for Local Government →</a>
+
     <div class="source-line">
       Data sources: Institute for Government Performance Tracker 2025 · Labour Together polling (Aug 2025, n=1,697) · Council Tax levels set by local authorities in England 2025–26, GOV.UK · "Fixing the shop front of the state", Dan Mead — Labour Together, March 2026. Tool built by Dylan Cridland.
     </div>
@@ -699,7 +849,6 @@ const YEARS = 4;
 const SOCIAL_CARE_START = 70;
 const SOCIAL_CARE_GROWTH = 0.07;
 const CT_BASE_START = 83;
-
 const YEAR_LABELS = ['2025/26','2026/27','2027/28','2028/29'];
 
 const ALL_SERVICES = [
@@ -712,6 +861,47 @@ const ALL_SERVICES = [
   { id: 'planning',  label: 'Reduce planning department',          saving: 0.7,  consequence: 'Planning decisions take 6+ months longer; development slows' },
   { id: 'youth',     label: 'Cut youth services',                  saving: 0.6,  consequence: 'Youth clubs and drop-in centres closed across the borough' },
 ];
+
+// Quips per service — [type, source, text]
+const SERVICE_QUIPS = {
+  garden:    [
+    ['social', 'Northfield Residents (Facebook)', '"Just had a letter saying I now have to PAY for my garden waste. Council tax has gone up every single year and now THIS. Absolute joke." — 847 likes, 312 comments'],
+    ['press',  'Northfield Gazette', 'Hundreds of residents complain as council introduces garden waste charge'],
+  ],
+  libraries: [
+    ['social', 'NorthfieldMum (Twitter/X)', '"My kids have nowhere to go after school now. The library was free, safe and warm. Shame on this council." — 1.2k likes'],
+    ['press',  'Northfield Gazette', 'Heartbreak as council confirms permanent closure of Eastbridge and Millfield libraries'],
+  ],
+  parks:     [
+    ['social', 'Northfield Community Forum', '"Has anyone else noticed the state of Victoria Park? Grass is knee-high and the play area is taped off. Total disgrace." — 634 replies'],
+    ['press',  'Northfield Mail', '"It looks like a wasteland" — residents react to park maintenance cuts'],
+  ],
+  potholes:  [
+    ['social', 'NorthfieldDrivers (Twitter/X)', '"Third puncture this year on the same stretch of road. Council does absolutely nothing. 🤬" — 2.1k likes'],
+    ['press',  'Northfield Gazette', 'Northfield roads ranked among worst in region as council halts repair programme'],
+  ],
+  buses:     [
+    ['press',  'Northfield Mail', 'Pensioners stranded as evening and rural bus routes axed in council cuts'],
+    ['radio',  'BBC Radio Northfield', '"We\'re taking your calls on the bus cuts — the phones haven\'t stopped ringing all morning"'],
+  ],
+  arts:      [
+    ['press',  'Northfield Gazette', 'Annual Northfield Festival cancelled for first time in its 34-year history'],
+    ['social', 'Northfield Arts Centre (Facebook)', '"We\'re devastated to announce the centre will reduce opening hours by 60% due to council funding cuts. Thank you for your continued support." — 4.8k reactions'],
+  ],
+  planning:  [
+    ['press',  'Northfield Business Review', 'Planning delays costing local firms as council cuts department staffing'],
+    ['social', 'NorthfieldDeveloper (Twitter/X)', '"6 months waiting on a planning application that should take 8 weeks. This council is strangling local business." — 890 likes'],
+  ],
+  youth:     [
+    ['press',  'Northfield Mail', '"These kids have nowhere to go. We\'re setting them up to fail." — youth worker responds to cuts'],
+    ['social', 'Northfield Community Watch (Facebook)', '"Third antisocial behaviour incident this week near the old youth centre. Draw your own conclusions." — 1.4k reactions'],
+  ],
+};
+
+const CT_QUIPS = {
+  5:   ['press',  'Northfield Mail',    'Council tax to rise by 5% AGAIN — residents ask "what are we paying for?"'],
+  2.5: ['press',  'Northfield Gazette', 'Council tax rise of 2.5% agreed despite resident opposition at public meeting'],
+};
 
 let state = {};
 
@@ -726,12 +916,14 @@ function resetState() {
     allCuts: [],
     totalCutsSaved: 0,
     totalOverspend: 0,
+    deficit: 0,
+    satisfaction: 60,
     availableServices: ALL_SERVICES.map(s => s.id),
   };
 }
 
 function shortfall() {
-  return parseFloat((state.socialCare * SOCIAL_CARE_GROWTH).toFixed(2));
+  return parseFloat((state.socialCare * SOCIAL_CARE_GROWTH + state.deficit).toFixed(2));
 }
 
 function ctRevenue(optIdx) {
@@ -755,21 +947,15 @@ function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
+  // Tell parent page the new content height so iframe can resize
+  requestAnimationFrame(() => {
+    window.parent.postMessage({ iframeHeight: document.body.scrollHeight }, '*');
+  });
 }
 
 function showBudget() { showScreen('screen-budget'); }
-
-function startGame() {
-  state = resetState();
-  renderRound();
-  showScreen('screen-round');
-}
-
-function restartGame() {
-  state = resetState();
-  renderRound();
-  showScreen('screen-round');
-}
+function startGame()  { state = resetState(); renderRound(); showScreen('screen-round'); }
+function restartGame(){ state = resetState(); renderRound(); showScreen('screen-round'); }
 
 function renderRound() {
   const sf = shortfall();
@@ -777,17 +963,17 @@ function renderRound() {
   state.selectedCuts = new Set();
 
   const yearLabel = YEAR_LABELS[state.year - 1];
-document.getElementById('round-tag').textContent = `Year ${state.year} — ${yearLabel}`;
+  document.getElementById('round-tag').textContent = `Year ${state.year} — ${yearLabel}`;
   document.getElementById('yb-year').textContent = `Year ${state.year}`;
 
-  // Progress pips
   for (let i = 1; i <= 4; i++) {
     document.getElementById(`pip-${i}`).className = 'year-pip' + (i < state.year ? ' done' : '');
   }
 
+  const deficitNote = state.deficit > 0 ? ` (including £${state.deficit.toFixed(1)}m carried from last year's deficit)` : '';
   document.getElementById('sc-amount').textContent = `£${sf.toFixed(1)}m`;
   document.getElementById('sc-desc').textContent =
-    `More people need care than last year. Social care costs have risen 7%, adding £${sf.toFixed(1)}m to your bill. You must find this money.`;
+    `Social care costs have risen 7%, adding £${(state.socialCare * SOCIAL_CARE_GROWTH).toFixed(1)}m to your bill${deficitNote}. You must find this money.`;
 
   const socialPct = Math.round((state.socialCare / 180) * 100);
   document.getElementById('mb-social').style.flexBasis = socialPct + '%';
@@ -861,40 +1047,135 @@ function updateGap() {
     note.textContent = `£${gap.toFixed(1)}m still unresolved.`;
     note.className = 'balance-note over';
     btn.disabled = false;
-    btn.textContent = gap > 0.5 ? 'Continue with deficit →' : 'Next year →';
+    btn.textContent = 'Continue with deficit →';
   } else {
     indicator.innerHTML = `<span class="gap-ok">Budget balanced</span> — you've covered the shortfall for this year.`;
     note.textContent = 'Budget balanced.';
     note.className = 'balance-note balanced';
     btn.disabled = false;
-    btn.textContent = state.year < YEARS ? 'Next year →' : 'See the outcome →';
+    btn.textContent = 'See local reaction →';
   }
 }
 
 function nextRound() {
   if (state.selectedTax === null) return;
   const pcts = [0, 2.5, 5];
-  state.cumulativeTaxPct += pcts[state.selectedTax];
-  state.ctBase = parseFloat((state.ctBase * (1 + pcts[state.selectedTax] / 100)).toFixed(2));
+  const taxPct = pcts[state.selectedTax];
 
+  // Update satisfaction
+  if (taxPct === 5)   state.satisfaction -= 7;
+  if (taxPct === 2.5) state.satisfaction -= 3;
+
+  state.cumulativeTaxPct += taxPct;
+  state.ctBase = parseFloat((state.ctBase * (1 + taxPct / 100)).toFixed(2));
+
+  // Process cuts
+  const yearCuts = [];
   state.selectedCuts.forEach(id => {
     const svc = ALL_SERVICES.find(s => s.id === id);
     if (svc) {
       state.allCuts.push({ ...svc, year: state.year, yearLabel: YEAR_LABELS[state.year - 1] });
+      yearCuts.push(id);
       state.totalCutsSaved += svc.saving;
       state.availableServices = state.availableServices.filter(x => x !== id);
+      state.satisfaction -= 6;
     }
   });
 
-  state.totalOverspend += shortfall();
+  // Deficit
+  const gap = remainingGap();
+  if (gap > 0.05) {
+    state.deficit = gap;
+    state.satisfaction -= 5;
+  } else {
+    state.deficit = 0;
+  }
+
+  state.totalOverspend += parseFloat((state.socialCare * SOCIAL_CARE_GROWTH).toFixed(2));
   state.socialCare = parseFloat((state.socialCare * (1 + SOCIAL_CARE_GROWTH)).toFixed(2));
 
+  // Build reactions for this year
+  const reactions = [];
+  if (taxPct > 0 && CT_QUIPS[taxPct]) {
+    reactions.push(CT_QUIPS[taxPct]);
+  }
+  yearCuts.forEach(id => {
+    if (SERVICE_QUIPS[id]) {
+      reactions.push(SERVICE_QUIPS[id][0]);
+      if (SERVICE_QUIPS[id][1]) reactions.push(SERVICE_QUIPS[id][1]);
+    }
+  });
+
+  showReview(reactions, gap > 0.05 ? gap : 0);
+}
+
+function showReview(reactions, deficitAmount) {
+  const yearLabel = YEAR_LABELS[state.year - 1];
+  document.getElementById('review-tag').textContent = `Year ${state.year} — How Northfield responded`;
+  document.getElementById('review-yb-year').textContent = `Year ${state.year}`;
+
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById(`rpip-${i}`).className = 'year-pip' + (i <= state.year ? ' done' : '');
+  }
+
+  const feed = document.getElementById('reaction-feed');
+  feed.innerHTML = '';
+
+  if (reactions.length === 0) {
+    feed.innerHTML = '<div class="reaction-item"><div class="r-source">Northfield Mail</div>Another quiet year at the council. Residents cautiously optimistic.</div>';
+  } else {
+    reactions.forEach(([type, source, text]) => {
+      const item = document.createElement('div');
+      item.className = `reaction-item ${type}`;
+      item.innerHTML = `<div class="r-source">${source}</div>${text}`;
+      feed.appendChild(item);
+    });
+  }
+
+  // Deficit warning
+  const dw = document.getElementById('deficit-warning');
+  if (deficitAmount > 0.05) {
+    dw.style.display = 'block';
+    document.getElementById('deficit-warning-text').textContent =
+      `You're carrying a £${deficitAmount.toFixed(1)}m deficit into ${YEAR_LABELS[state.year]}. This will be added to next year's shortfall on top of social care growth.`;
+  } else {
+    dw.style.display = 'none';
+  }
+
+  const btn = document.getElementById('review-next-btn');
+  if (state.year < YEARS) {
+    btn.textContent = `Continue to Year ${state.year + 1} →`;
+  } else {
+    btn.textContent = 'See election result →';
+  }
+
+  showScreen('screen-review');
+}
+
+function proceedFromReview() {
   if (state.year < YEARS) {
     state.year++;
     renderRound();
+    showScreen('screen-round');
   } else {
-    showOutcome();
+    showElection();
   }
+}
+
+function showElection() {
+  const sat = state.satisfaction;
+  let narrative;
+
+  if (sat >= 40) {
+    narrative = 'After four years running Northfield, residents wanted change. Council tax rose every year — and services were still cut. Voters recognised the impossible position you were in. They didn\'t blame you personally — but they voted for someone promising it would be different.';
+  } else if (sat >= 28) {
+    narrative = 'After four years running Northfield, residents voted for change. Council tax rose every year. Visible services were cut. Even those who understood the pressures you faced felt the system had stopped working for them. They voted for someone promising things would be different.';
+  } else {
+    narrative = 'After four years running Northfield, the accumulation of it — rising council tax, a growing deficit, services stripped back year on year — left residents with little faith that things could improve under the same leadership. They voted for change. The system made a better outcome close to impossible.';
+  }
+
+  document.getElementById('election-narrative').textContent = narrative;
+  showScreen('screen-election');
 }
 
 function showOutcome() {
