@@ -479,6 +479,22 @@
     }
     .verdict p + p { margin-top: 14px; }
 
+    /* ── Site footer ──────────────────────────────── */
+    .site-footer {
+      text-align: center;
+      padding: 24px 48px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      border-top: 1px solid var(--grey-border);
+    }
+    .site-footer a {
+      color: var(--red);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .site-footer a:hover { text-decoration: underline; }
+
     .paper-link {
       display: inline-block;
       font-size: 14px;
@@ -1333,5 +1349,10 @@ function showOutcome() {
   showScreen('screen-outcome');
 }
 </script>
+
+<footer class="site-footer">
+  Tool built by Dylan Cridland. Based on <a href="https://www.labourtogether.uk/all-reports/big-bang-reform-for-local-govt" target="_blank">paper</a> by Dan Mead.
+</footer>
+
 </body>
 </html>
