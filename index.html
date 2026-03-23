@@ -473,6 +473,24 @@
     }
     .verdict p + p { margin-top: 14px; }
 
+    /* ── Footnotes ────────────────────────────────── */
+    sup.fn {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      vertical-align: super;
+      margin-left: 1px;
+    }
+    .footnote {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.6;
+      border-top: 1px solid var(--grey-border);
+      padding-top: 12px;
+      margin-top: 4px;
+      margin-bottom: 32px;
+    }
+
     /* ── Site footer ──────────────────────────────── */
     .site-footer {
       text-align: center;
@@ -660,8 +678,10 @@
     </div>
 
     <div class="callout-box">
-      <p>Adult social care costs have grown at around <strong>7% per year</strong> in cash terms since 2019. An ageing population means more people need care. You cannot reduce demand. You can only find the money — and your only local lever is council tax, legally capped at <strong>5% per year</strong> without a referendum, unless the authority has been given a specific different principle by government for that year.</p>
+      <p>Adult social care costs have grown at around <strong>7% per year</strong><sup class="fn">1</sup> in cash terms since 2019. An ageing population means more people need care. You cannot reduce demand. You can only find the money — and your only local lever is council tax, legally capped at <strong>5% per year</strong> without a referendum, unless the authority has been given a specific different principle by government for that year.</p>
     </div>
+
+    <p class="footnote"><sup>1</sup> The compound annual growth rate in cash terms for 2019–2024 was ~8.1%, with a single-year peak of 13.1% in 2023–24. 7% is used as a conservative central estimate. Source: Adult Social Care Finance Report, England: 2024 to 2025, NHS England / GOV.UK.</p>
 
     <button class="btn-primary" onclick="startGame()">Start Year 1 →</button>
   </div>
