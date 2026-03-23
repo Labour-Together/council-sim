@@ -869,7 +869,7 @@
       <div class="outcome-stat">
         <div class="os-label">Total social care demand growth absorbed</div>
         <div class="os-value" id="out-total-overspend" style="color:var(--red)">—</div>
-        <div class="os-desc">Unavoidable — driven entirely by demographic demand</div>
+        <div class="os-desc">Driven by demographic demand, rising care complexity, and workforce cost pressures</div>
       </div>
     </div>
 
@@ -1319,12 +1319,13 @@ function showElection() {
 
 function showOutcome() {
   const finalSocialPct = Math.round((state.socialCare / 180) * 100);
+  const compoundedTaxRise = ((state.ctBase / CT_BASE_START) - 1) * 100;
   document.getElementById('out-tax-rise').textContent =
-    state.cumulativeTaxPct > 0 ? `+${state.cumulativeTaxPct.toFixed(0)}%` : 'Frozen';
+    compoundedTaxRise > 0 ? `+${compoundedTaxRise.toFixed(1)}%` : 'Frozen';
   document.getElementById('out-tax-desc').textContent =
-    state.cumulativeTaxPct >= 20
+    compoundedTaxRise >= 21
       ? 'Maximum permitted over 4 years. Residents are paying significantly more for fewer services.'
-      : state.cumulativeTaxPct === 0
+      : compoundedTaxRise === 0
       ? 'You froze council tax. Residents noticed. The books did too.'
       : 'A partial rise — some pressure absorbed, not all of it.';
 
