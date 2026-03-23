@@ -1247,7 +1247,7 @@ function showReview(reactions, deficitAmount) {
 }
 
 function proceedFromReview() {
-  if (state.deficitYears >= 3) {
+  if (state.deficitYears >= 3 || state.deficit > 10) {
     showSection114();
     return;
   }
