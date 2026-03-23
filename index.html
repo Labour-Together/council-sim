@@ -43,7 +43,7 @@
     .tag {
       display: inline-block;
       font-size: 11px;
-      font-weight: 600;
+
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--red);
@@ -84,7 +84,7 @@
       color: #FFFFFF;
       font-family: 'Cabin', sans-serif;
       font-size: 14px;
-      font-weight: 600;
+
       letter-spacing: 0.01em;
       border: none;
       cursor: pointer;
@@ -150,7 +150,7 @@
     }
     .p-label {
       font-size: 11px;
-      font-weight: 600;
+
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
@@ -170,7 +170,7 @@
 
     .section-label {
       font-size: 11px;
-      font-weight: 600;
+
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
@@ -239,7 +239,7 @@
     }
     .year-bar .yb-label {
       font-size: 11px;
-      font-weight: 600;
+
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
@@ -268,7 +268,7 @@
     }
     .sc-label {
       font-size: 11px;
-      font-weight: 600;
+
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--red);
@@ -286,7 +286,7 @@
 
     .decision-section { margin-bottom: 36px; }
     .ds-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -294,7 +294,7 @@
       margin-bottom: 6px;
     }
     .ds-sub {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--muted);
       margin-bottom: 16px;
       line-height: 1.6;
@@ -406,7 +406,7 @@
     }
     .os-label {
       font-size: 11px;
-      font-weight: 600;
+
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
@@ -424,7 +424,7 @@
     .cuts-section { margin-bottom: 40px; }
     .cuts-section .cs-label {
       font-size: 11px;
-      font-weight: 600;
+
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
@@ -481,21 +481,17 @@
       margin-bottom: 8px;
     }
 
-    /* ── Site footer ──────────────────────────────── */
-    .site-footer {
-      text-align: center;
-      padding: 24px 48px;
-      font-size: 13px;
+    /* ── Attribution line ─────────────────────────── */
+    .attr-line {
+      font-size: 12px;
       font-weight: 600;
       color: var(--muted);
+      padding-top: 24px;
       border-top: 1px solid var(--grey-border);
+      margin-top: 32px;
     }
-    .site-footer a {
-      color: var(--red);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .site-footer a:hover { text-decoration: underline; }
+    .attr-line a { color: var(--red); text-decoration: none; }
+    .attr-line a:hover { text-decoration: underline; }
 
     .paper-link {
       display: block;
@@ -671,6 +667,7 @@
       <p>Adult social care costs have grown at around <strong>8.1% per year</strong> in cash terms since 2019. An ageing population means more people need care. You cannot reduce demand. You can only find the money — and your only local lever is council tax, legally capped at <strong>5% per year</strong> without a referendum, unless the authority has been given a specific different principle by government for that year.</p>
     </div>
 
+    <p class="attr-line">Tool built by Dylan Cridland. Based on <a href="https://www.labourtogether.uk/all-reports/big-bang-reform-for-local-govt" target="_blank">paper</a> by Dan Mead.</p>
     <button class="btn-primary" onclick="startGame()">Start Year 1 →</button>
   </div>
 </div>
@@ -741,6 +738,7 @@
         <button class="btn-outline" onclick="showScreen('screen-intro')">↺ Restart</button>
         <button class="btn-primary" id="next-round-btn" onclick="nextRound()" disabled>Next year →</button>
       </div>
+    <p class="attr-line">Tool built by Dylan Cridland. Based on <a href="https://www.labourtogether.uk/all-reports/big-bang-reform-for-local-govt" target="_blank">paper</a> by Dan Mead.</p>
     </div>
   </div>
 </div>
@@ -768,6 +766,7 @@
     <div style="display:flex;gap:10px;">
       <button class="btn-outline" onclick="showScreen('screen-intro')">↺ Restart</button>
       <button class="btn-primary" id="review-next-btn" onclick="proceedFromReview()">Next year →</button>
+    <p class="attr-line">Tool built by Dylan Cridland. Based on <a href="https://www.labourtogether.uk/all-reports/big-bang-reform-for-local-govt" target="_blank">paper</a> by Dan Mead.</p>
     </div>
   </div>
 </div>
@@ -785,6 +784,7 @@
     </div>
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
       <button class="btn-primary" onclick="showOutcome()">See your four years →</button>
+    <p class="attr-line">Tool built by Dylan Cridland. Based on <a href="https://www.labourtogether.uk/all-reports/big-bang-reform-for-local-govt" target="_blank">paper</a> by Dan Mead.</p>
     </div>
   </div>
 </div>
@@ -818,6 +818,7 @@
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;">
       <button class="btn-primary" onclick="restartGame()">Try again</button>
       <button class="btn-outline" onclick="showScreen('screen-intro')">Start over</button>
+    <p class="attr-line">Tool built by Dylan Cridland. Based on <a href="https://www.labourtogether.uk/all-reports/big-bang-reform-for-local-govt" target="_blank">paper</a> by Dan Mead.</p>
     </div>
   </div>
 </div>
@@ -1333,9 +1334,7 @@ function showOutcome() {
 }
 </script>
 
-<footer class="site-footer">
-  Tool built by Dylan Cridland. Based on <a href="https://www.labourtogether.uk/all-reports/big-bang-reform-for-local-govt" target="_blank">paper</a> by Dan Mead.
-</footer>
+
 
 </body>
 </html>
