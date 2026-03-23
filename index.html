@@ -399,6 +399,9 @@
       gap: 2px;
       margin-bottom: 40px;
     }
+    @media (max-width: 560px) {
+      .outcome-grid { grid-template-columns: 1fr; }
+    }
     .outcome-stat {
       background: var(--grey);
       border: 1px solid var(--grey-border);
@@ -1105,12 +1108,27 @@ function shareBsky() {
   window.open(url, '_blank');
 }
 function copyLink(btnId) {
-  navigator.clipboard.writeText(SHARE_URL).then(() => {
-    const btn = document.getElementById(btnId);
-    const orig = btn.innerHTML;
+  const btn = document.getElementById(btnId);
+  const orig = btn.innerHTML;
+  const confirm = () => {
     btn.textContent = '✓ Copied!';
     setTimeout(() => { btn.innerHTML = orig; }, 2000);
-  });
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(SHARE_URL).then(confirm).catch(() => execCopy(confirm));
+  } else {
+    execCopy(confirm);
+  }
+}
+function execCopy(callback) {
+  const ta = document.createElement('textarea');
+  ta.value = SHARE_URL;
+  ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0;';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try { document.execCommand('copy'); callback(); } catch(e) {}
+  document.body.removeChild(ta);
 }
 
 function showBudget() { showScreen('screen-budget'); }
