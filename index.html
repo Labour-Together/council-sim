@@ -705,12 +705,12 @@
   </div>
   <div class="wrap" style="padding-top:32px;">
     <div class="tag" id="round-tag">Year 1 — 2025/26</div>
-    <h2>Social care demand<br><span>has risen. Again.</span></h2>
+    <h2>Social care demand<br><span>is expected to rise. Again.</span></h2>
 
     <div class="shortfall-card">
       <div class="sc-label">This year's social care overspend</div>
       <div class="sc-amount" id="sc-amount">£4.9m</div>
-      <div class="sc-desc" id="sc-desc">More people need care than last year. Costs have risen 7%. You must find this money.</div>
+      <div class="sc-desc" id="sc-desc">More people are expected to need care this year. Costs are projected to rise 7%. You must find this money.</div>
     </div>
 
     <div class="mini-budget-wrap">
@@ -1085,7 +1085,7 @@ function renderRound() {
   const deficitNote = state.deficit > 0 ? ` (including £${state.deficit.toFixed(1)}m carried from last year's deficit)` : '';
   document.getElementById('sc-amount').textContent = `£${sf.toFixed(1)}m`;
   document.getElementById('sc-desc').textContent =
-    `Social care costs have risen 7%, adding £${(state.socialCare * SOCIAL_CARE_GROWTH).toFixed(1)}m to your bill${deficitNote}. You must find this money.`;
+    `Social care costs are projected to rise 7% this year, adding £${(state.socialCare * SOCIAL_CARE_GROWTH).toFixed(1)}m to your bill${deficitNote}. You must find this money.`;
 
   const socialPct = Math.round((state.socialCare / 180) * 100);
   document.getElementById('mb-social').style.flexBasis = socialPct + '%';
