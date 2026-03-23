@@ -794,7 +794,7 @@
   <div class="wrap">
     <div class="tag">Financial Emergency — Year <span id="s114-year"></span></div>
     <h2>Section 114 notice <span>has been issued.</span></h2>
-    <p class="election-narrative">Northfield's Section 151 officer has issued a Section 114 notice. After three consecutive years of unresolved deficits, the council can no longer demonstrate a balanced budget. All new spending is frozen. Government-appointed commissioners are taking control.</p>
+    <p class="election-narrative" id="s114-narrative"></p>
     <div class="election-divider"></div>
     <div class="election-verdict">
       <p class="ev-quote">This isn't a failure of leadership. It's what happens when national demand meets local funding.</p>
@@ -1257,7 +1257,7 @@ function showReview(reactions, deficitAmount) {
 
 function proceedFromReview() {
   if (state.deficitYears >= 3 || state.deficit > 10) {
-    showSection114();
+    showSection114(state.deficit > 10 ? 'deficit' : 'consecutive');
     return;
   }
   if (state.year < YEARS) {
@@ -1269,10 +1269,13 @@ function proceedFromReview() {
   }
 }
 
-function showSection114() {
+function showSection114(reason) {
   document.getElementById('s114-year').textContent = state.year;
   document.getElementById('s114-deficit').textContent = `£${state.deficit.toFixed(1)}m`;
   document.getElementById('s114-cuts').textContent = state.allCuts.length;
+  document.getElementById('s114-narrative').textContent = reason === 'deficit'
+    ? `Northfield's Section 151 officer has issued a Section 114 notice. With an accumulated deficit of £${state.deficit.toFixed(1)}m, the council can no longer demonstrate a balanced budget. All new spending is frozen. Government-appointed commissioners are taking control.`
+    : `Northfield's Section 151 officer has issued a Section 114 notice. After three consecutive years of unresolved deficits, the council can no longer demonstrate a balanced budget. All new spending is frozen. Government-appointed commissioners are taking control.`;
   showScreen('screen-s114');
 }
 
