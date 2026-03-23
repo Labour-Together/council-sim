@@ -392,14 +392,6 @@
     /* ── Screen 3: Outcome ────────────────────────── */
     #screen-outcome { background: #FFFFFF; }
 
-    .outcome-hero {
-      background: var(--red);
-      padding: 56px 48px;
-      margin-bottom: 0;
-    }
-    .outcome-hero .tag { color: rgba(255,255,255,0.7); }
-    .outcome-hero h1 { color: #FFFFFF; }
-    .outcome-hero h1 span { color: rgba(255,255,255,0.5); }
 
     .outcome-grid {
       display: grid;
@@ -567,23 +559,6 @@
 
     /* ── Election screen ──────────────────────────── */
     #screen-election { background: #FFFFFF; }
-    .election-bar {
-      background: var(--red);
-      padding: 48px 48px 40px;
-    }
-    .election-bar-inner {
-      max-width: 820px;
-      margin: 0 auto;
-      width: 100%;
-    }
-    .election-bar .tag { color: rgba(255,255,255,0.7); margin-bottom: 16px; }
-    .election-bar-headline {
-      font-size: clamp(28px, 3.5vw, 44px);
-      font-weight: 700;
-      color: #FFFFFF;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-    }
     .election-narrative {
       font-size: 17px;
       line-height: 1.85;
@@ -790,14 +765,10 @@
 
 <!-- ══ SCREEN 4: ELECTION ════════════════════════════════════ -->
 <div id="screen-election" class="screen">
-  <div class="election-bar">
-    <div class="election-bar-inner">
-      <div class="tag">Election Night — 2029</div>
-      <div class="election-bar-headline">The people of Northfield<br>have voted.</div>
-    </div>
-  </div>
   <div class="wrap">
-    <p class="election-narrative" id="election-narrative"></p>
+    <div class="tag">Election Night — 2029</div>
+    <h2>The people of Northfield <span>have voted.</span></h2>
+    <p class="election-narrative" id="election-narrative" style="margin-top:32px;"></p>
     <div class="election-divider"></div>
     <div class="election-verdict">
       <p class="ev-quote">No council leader in England can win this game under the current funding system.</p>
@@ -811,13 +782,9 @@
 
 <!-- ══ SCREEN: SECTION 114 ═══════════════════════════════════ -->
 <div id="screen-s114" class="screen">
-  <div class="election-bar" style="background:#1A1A1A;">
-    <div class="election-bar-inner">
-      <div class="tag" style="color:rgba(255,255,255,0.55);">Financial Emergency — Year <span id="s114-year"></span></div>
-      <div class="election-bar-headline">Section 114 notice<br>has been issued.</div>
-    </div>
-  </div>
   <div class="wrap">
+    <div class="tag">Financial Emergency — Year <span id="s114-year"></span></div>
+    <h2>Section 114 notice <span>has been issued.</span></h2>
     <p class="election-narrative">Northfield's Section 151 officer has issued a Section 114 notice. After three consecutive years of unresolved deficits, the council can no longer demonstrate a balanced budget. All new spending is frozen. Government-appointed commissioners are taking control.</p>
     <div class="election-divider"></div>
     <div class="election-verdict">
@@ -846,11 +813,9 @@
 
 <!-- ══ SCREEN 5: OUTCOME ═════════════════════════════════════ -->
 <div id="screen-outcome" class="screen">
-  <div class="outcome-hero">
-    <div class="tag">Four years later</div>
-    <h1>Here's what you<br><span>managed.</span></h1>
-  </div>
   <div class="wrap">
+    <div class="tag">Four years later</div>
+    <h2>Here's what you <span>managed.</span></h2>
     <div class="outcome-grid">
       <div class="outcome-stat">
         <div class="os-label">Council tax rise over 4 years</div>
