@@ -508,6 +508,34 @@
     }
     .paper-link:hover { background: var(--red-dark); }
 
+    .share-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 28px 0;
+    }
+    .btn-share {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 13px 22px;
+      font-family: 'Cabin', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn-share:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-share:active { transform: translateY(0); }
+    .btn-share svg { flex-shrink: 0; }
+    .btn-share-x      { background: #000000; color: #FFFFFF; }
+    .btn-share-sky    { background: #0085FF; color: #FFFFFF; }
+    .btn-share-copy   { background: #F0F0F0; color: #1A1A1A; border: 1px solid #DDDDDD; }
+
     .source-line {
       font-size: 11px;
       color: #AAAAAA;
@@ -588,6 +616,7 @@
       margin-bottom: 20px;
       max-width: 600px;
     }
+    .ev-body + .ev-body { margin-top: 16px; }
     .ev-body {
       font-size: 15px;
       line-height: 1.8;
@@ -608,7 +637,7 @@
     </div>
     <h1>Congratulations.<br><span>You're in charge.</span></h1>
     <p class="body-text">
-      You've just been elected leader of Northfield Council. Population 280,000. Annual budget: <strong>£180 million</strong>.<br><br>
+      You've just been elected leader of Northfield Council. Population 185,000. Annual budget: <strong>£180 million</strong>.<br><br>
       You want to fix the roads. Sort the parks. Keep the libraries open. Maybe actually collect the bins on time.<br><br>
       You have four years. Good luck.
     </p>
@@ -694,7 +723,6 @@
       <div class="sc-amount" id="sc-amount">£4.9m</div>
       <div class="sc-desc" id="sc-desc">More people are expected to need care this year. Costs are projected to rise 7%<sup style="font-size:10px;color:#999;vertical-align:super;">*</sup>. You must find this money.</div>
     </div>
-    <p class="round-footnote">* Illustrative figure used for this simulation. The actual cash CAGR for adult social care in England was ~8.1% per year between 2019 and 2024. Source: Adult Social Care Finance Report, England: 2024 to 2025, NHS England / GOV.UK.</p>
 
     <div class="mini-budget-wrap">
       <div class="mini-budget-label">Social care share of total budget (growing)</div>
@@ -740,6 +768,7 @@
         <button class="btn-primary" id="next-round-btn" onclick="nextRound()" disabled>Next year →</button>
       </div>
     </div>
+    <p class="round-footnote">* Illustrative figure used for this simulation. The actual cash CAGR for adult social care in England was ~8.1% per year between 2019 and 2024. Source: Adult Social Care Finance Report, England: 2024 to 2025, NHS England / GOV.UK.</p>
     <p class="attr-line">Tool built by Dylan Cridland. Based on <a href="https://www.labourtogether.uk/all-reports/big-bang-reform-for-local-govt" target="_blank">paper</a> by Dan Mead.</p>
   </div>
 </div>
@@ -777,6 +806,7 @@
   <div class="wrap">
     <div class="tag">Election Night — 2029</div>
     <h2>The people of Northfield <span>have voted.</span></h2>
+    <p style="font-size:clamp(20px,2.4vw,30px);font-weight:700;color:var(--text);margin-top:12px;margin-bottom:0;">You have lost control of the council.</p>
     <p class="election-narrative" id="election-narrative" style="margin-top:32px;"></p>
     <div class="election-divider"></div>
     <div class="election-verdict">
@@ -795,6 +825,7 @@
   <div class="wrap">
     <div class="tag">Financial Emergency — Year <span id="s114-year"></span></div>
     <h2>Section 114 notice <span>has been issued.</span></h2>
+    <p style="font-size:clamp(20px,2.4vw,30px);font-weight:700;color:var(--text);margin-top:12px;margin-bottom:0;">Your council is effectively bankrupt.</p>
     <p class="election-narrative" id="s114-narrative"></p>
     <div class="election-divider"></div>
     <div class="election-verdict">
@@ -803,7 +834,14 @@
       <p class="ev-body">But before it gets here, every council goes through the same impossible sequence. Raise council tax to the maximum. Cut the services residents can see. Watch the social care bill grow faster than either can cover. Repeat until the books won't balance.</p>
       <p class="ev-body">The gap was always going to land somewhere. Social care is a national responsibility. Council tax is a local one. They were never the same size.</p>
     </div>
-    <div class="outcome-grid" style="margin-bottom:32px;">
+    <div class="verdict">
+      <h3>This isn't a management problem.<br><span>It's a structural one.</span></h3>
+      <p>Every council in England faces the same squeeze. In 2025/26, 350 out of the 384 councils in England raised council tax by close to or at the maximum amount allowable — not because they wanted to, but because social care costs left them no choice.</p>
+      <p>Even at maximum council tax every year, a typical council cannot cover social care demand growth. The gap must come from visible services. The bins, the libraries, the parks — these aren't always cut because of waste or incompetence. They're cut because adult social care is a national problem being solved with a local tax.</p>
+      <p style="margin-top:20px;color:#FFFFFF;font-weight:700;">Labour Together have a solution. Read the paper below.</p>
+    </div>
+    <a href="https://www.labourtogether.uk/all-reports/big-bang-reform-for-local-govt" target="_blank" class="paper-link">Read the full paper: Fixing the shop front of the state →</a>
+    <div class="outcome-grid" style="margin-bottom:32px;margin-top:32px;">
       <div class="outcome-stat">
         <div class="os-label">Deficit this year</div>
         <div class="os-value" id="s114-deficit" style="color:var(--red);">—</div>
@@ -815,7 +853,11 @@
         <div class="os-desc">Reductions made before the books became unmanageable</div>
       </div>
     </div>
-    <a href="https://www.labourtogether.uk/all-reports/big-bang-reform-for-local-govt" target="_blank" class="paper-link">Read the full paper: Fixing the shop front of the state →</a>
+    <div class="share-row">
+      <button class="btn-share btn-share-x" onclick="shareX()"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Share on X</button>
+      <button class="btn-share btn-share-sky" onclick="shareBsky()"><svg width="17" height="15" viewBox="0 0 568 501" fill="currentColor"><path d="M123.121 33.664C188.241 82.553 258.281 181.68 284 234.873c25.719-53.192 95.759-152.32 160.879-201.209C491.866-1.611 568-28.906 568 57.731c0 17.363-9.945 145.951-15.778 166.905-20.275 72.379-94.155 90.782-159.875 79.543 114.804 19.512 144.016 84.169 80.959 148.828-119.865 122.981-172.328-30.88-185.936-70.279-2.446-7.176-3.583-10.521-3.57-7.675.013-2.846-1.124.499-3.57 7.675-13.608 39.399-66.071 193.26-185.936 70.279-63.057-64.659-33.845-129.316 80.959-148.828-65.72 11.239-139.6-7.164-159.875-79.543C9.945 203.682 0 75.094 0 57.731 0-28.906 76.134-1.611 123.121 33.664z"/></svg> Share on Bluesky</button>
+      <button class="btn-share btn-share-copy" id="copy-btn-s114" onclick="copyLink('copy-btn-s114')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy link</button>
+    </div>
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;">
       <button class="btn-primary" onclick="restartGame()">Try again</button>
       <button class="btn-outline" onclick="showScreen('screen-intro')">Start over</button>
@@ -861,9 +903,16 @@
       <h3>This isn't a management problem.<br><span>It's a structural one.</span></h3>
       <p>Every council in England faces the same squeeze. In 2025/26, 350 out of the 384 councils in England raised council tax by close to or at the maximum amount allowable — not because they wanted to, but because social care costs left them no choice.</p>
       <p>Even at maximum council tax every year, a typical council cannot cover social care demand growth. The gap must come from visible services. The bins, the libraries, the parks — these aren't always cut because of waste or incompetence. They're cut because adult social care is a national problem being solved with a local tax.</p>
+      <p style="margin-top:20px;color:#FFFFFF;font-weight:700;">Labour Together have a solution. Read the paper below.</p>
     </div>
 
     <a href="https://www.labourtogether.uk/all-reports/big-bang-reform-for-local-govt" target="_blank" class="paper-link">Read the full paper: Fixing the shop front of the state →</a>
+
+    <div class="share-row">
+      <button class="btn-share btn-share-x" onclick="shareX()"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Share on X</button>
+      <button class="btn-share btn-share-sky" onclick="shareBsky()"><svg width="17" height="15" viewBox="0 0 568 501" fill="currentColor"><path d="M123.121 33.664C188.241 82.553 258.281 181.68 284 234.873c25.719-53.192 95.759-152.32 160.879-201.209C491.866-1.611 568-28.906 568 57.731c0 17.363-9.945 145.951-15.778 166.905-20.275 72.379-94.155 90.782-159.875 79.543 114.804 19.512 144.016 84.169 80.959 148.828-119.865 122.981-172.328-30.88-185.936-70.279-2.446-7.176-3.583-10.521-3.57-7.675.013-2.846-1.124.499-3.57 7.675-13.608 39.399-66.071 193.26-185.936 70.279-63.057-64.659-33.845-129.316 80.959-148.828-65.72 11.239-139.6-7.164-159.875-79.543C9.945 203.682 0 75.094 0 57.731 0-28.906 76.134-1.611 123.121 33.664z"/></svg> Share on Bluesky</button>
+      <button class="btn-share btn-share-copy" id="copy-btn-outcome" onclick="copyLink('copy-btn-outcome')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy link</button>
+    </div>
 
     <div class="source-line">
       Data sources: Institute for Government Performance Tracker 2025 · Labour Together polling (Aug 2025, n=1,697) · Council Tax levels set by local authorities in England 2025–26, GOV.UK · "Fixing the shop front of the state", Dan Mead — Labour Together, March 2026. Tool built by Dylan Cridland.
@@ -897,11 +946,11 @@ const ALL_SERVICES = [
 // Quips per service — [type, source, text]
 const SERVICE_QUIPS = {
   garden:    [
-    ['social', 'Northfield Residents (Facebook)', '"Just had a letter saying I now have to PAY for my garden waste. Council tax has gone up every single year and now THIS. Absolute joke." — 847 likes, 312 comments'],
+    ['social', 'Social Media', '"Just had a letter saying I now have to PAY for my garden waste. Council tax has gone up every single year and now THIS. Absolute joke." — 847 likes, 312 comments'],
     ['press',  'Northfield Gazette', 'Hundreds of residents complain as council introduces garden waste charge'],
   ],
   libraries: [
-    ['social', 'NorthfieldMum (Twitter/X)', '"My kids have nowhere to go after school now. The library was free, safe and warm. Shame on this council." — 1.2k likes'],
+    ['social', 'Social Media', '"My kids have nowhere to go after school now. The library was free, safe and warm. Shame on this council." — 1.2k likes'],
     ['press',  'Northfield Gazette', 'Heartbreak as council confirms permanent closure of Eastbridge and Millfield libraries'],
   ],
   parks:     [
@@ -909,24 +958,24 @@ const SERVICE_QUIPS = {
     ['press',  'Northfield Mail', '"It looks like a wasteland" — residents react to park maintenance cuts'],
   ],
   potholes:  [
-    ['social', 'NorthfieldDrivers (Twitter/X)', '"Third puncture this year on the same stretch of road. Council does absolutely nothing. 🤬" — 2.1k likes'],
+    ['social', 'Social Media', '"Third puncture this year on the same stretch of road. Council does absolutely nothing. 🤬" — 2.1k likes'],
     ['press',  'Northfield Gazette', 'Northfield roads ranked among worst in region as council halts repair programme'],
   ],
   buses:     [
     ['press',  'Northfield Mail', 'Pensioners stranded as evening and rural bus routes axed in council cuts'],
-    ['radio',  'BBC Radio Northfield', '"We\'re taking your calls on the bus cuts — the phones haven\'t stopped ringing all morning"'],
+    ['radio',  'Radio Northfield', '"We\'re taking your calls on the bus cuts — the phones haven\'t stopped ringing all morning"'],
   ],
   arts:      [
     ['press',  'Northfield Gazette', 'Annual Northfield Festival cancelled for first time in its 34-year history'],
-    ['social', 'Northfield Arts Centre (Facebook)', '"We\'re devastated to announce the centre will reduce opening hours by 60% due to council funding cuts. Thank you for your continued support." — 4.8k reactions'],
+    ['social', 'Social Media', '"We\'re devastated to announce the centre will reduce opening hours by 60% due to council funding cuts. Thank you for your continued support." — 4.8k reactions'],
   ],
   planning:  [
     ['press',  'Northfield Business Review', 'Planning delays costing local firms as council cuts department staffing'],
-    ['social', 'NorthfieldDeveloper (Twitter/X)', '"6 months waiting on a planning application that should take 8 weeks. This council is strangling local business." — 890 likes'],
+    ['social', 'Social Media', '"6 months waiting on a planning application that should take 8 weeks. This council is strangling local business." — 890 likes'],
   ],
   youth:     [
     ['press',  'Northfield Mail', '"These kids have nowhere to go. We\'re setting them up to fail." — youth worker responds to cuts'],
-    ['social', 'Northfield Community Watch (Facebook)', '"Third antisocial behaviour incident this week near the old youth centre. Draw your own conclusions." — 1.4k reactions'],
+    ['social', 'Social Media', '"Third antisocial behaviour incident this week near the old youth centre. Draw your own conclusions." — 1.4k reactions'],
   ],
 };
 
@@ -935,8 +984,8 @@ const CT_QUIPS = {
     pool: [
       ['press',  'Northfield Mail',    'Council tax to rise 5% — maximum permitted increase agreed amid social care pressures'],
       ['press',  'Northfield Gazette', '"What are we actually getting for this?" — residents react to 5% council tax rise'],
-      ['social', 'Northfield Residents (Facebook)', '"Council tax up AGAIN. Roads are a disgrace, libraries closing, parks neglected. Where does the money go?" — 1.8k likes, 432 comments'],
-      ['radio',  'BBC Radio Northfield', '"The phones have been busy all morning after the council confirmed a 5% rise — we\'re taking your calls"'],
+      ['social', 'Social Media', '"Council tax up AGAIN. Roads are a disgrace, libraries closing, parks neglected. Where does the money go?" — 1.8k likes, 432 comments'],
+      ['radio',  'Radio Northfield', '"The phones have been busy all morning after the council confirmed a 5% rise — we\'re taking your calls"'],
     ],
     contrast: {
       0:   ['press', 'Northfield Mail',    'Council U-turns with maximum 5% rise after last year\'s freeze — residents demand answers'],
@@ -947,8 +996,8 @@ const CT_QUIPS = {
     pool: [
       ['press',  'Northfield Mail',    'Council tax to rise 2.5% — below the maximum but residents still feel the pinch'],
       ['press',  'Northfield Gazette', '2.5% rise agreed as council cites unavoidable social care pressures'],
-      ['social', 'Northfield Residents (Facebook)', '"2.5% might sound small but it adds up every year. When does it stop?" — 743 likes'],
-      ['radio',  'BBC Radio Northfield', '"2.5% rise confirmed at last night\'s full council meeting — opposition says it\'s still too much"'],
+      ['social', 'Social Media', '"2.5% might sound small but it adds up every year. When does it stop?" — 743 likes'],
+      ['radio',  'Radio Northfield', '"2.5% rise confirmed at last night\'s full council meeting — opposition says it\'s still too much"'],
     ],
     contrast: {
       0:   ['press', 'Northfield Mail',    'Council breaks tax freeze with 2.5% rise — citing unavoidable social care pressures'],
@@ -959,8 +1008,8 @@ const CT_QUIPS = {
     pool: [
       ['press',  'Northfield Mail',    'Council freezes council tax — but critics warn the books don\'t add up'],
       ['press',  'Northfield Gazette', 'Tax freeze welcomed by residents — council silent on how it will cover social care gap'],
-      ['social', 'Northfield Residents (Facebook)', '"Finally — a year without a council tax rise. Let\'s see how long it lasts." — 1.1k likes'],
-      ['radio',  'BBC Radio Northfield', '"No council tax rise this year — but finance officers have raised concerns about the long-term position"'],
+      ['social', 'Social Media', '"Finally — a year without a council tax rise. Let\'s see how long it lasts." — 1.1k likes'],
+      ['radio',  'Radio Northfield', '"No council tax rise this year — but finance officers have raised concerns about the long-term position"'],
     ],
     contrast: {
       5:   ['press', 'Northfield Mail',    'Surprise tax freeze after maximum rise last year — but questions remain over how the gap will be filled'],
@@ -972,7 +1021,7 @@ const CT_QUIPS = {
 const DEFICIT_REACTIONS = [
   ['press',  'Northfield Mail',    'Council finances \'under strain\' as shortfall carried into next year — officers monitoring position closely'],
   ['press',  'Northfield Gazette', 'Warning signs at Northfield Council as deficit grows for second consecutive year — opposition calls for full audit'],
-  ['radio',  'BBC Radio Northfield', '"Finance officers have issued a formal warning. Northfield\'s deficit is growing for the third year running — we discuss what a Section 114 notice would mean for the borough"'],
+  ['radio',  'Radio Northfield', '"Finance officers have issued a formal warning. Northfield\'s deficit is growing for the third year running — we discuss what a Section 114 notice would mean for the borough"'],
 ];
 
 function getCTQuip(taxPct) {
@@ -1043,6 +1092,26 @@ window.addEventListener('load', () => {
     window.parent.postMessage({ iframeHeight: document.body.scrollHeight }, '*');
   });
 });
+
+const SHARE_URL  = 'https://www.labourtogether.uk/council-sim';
+const SHARE_TEXT = 'I just tried running a council. It didn\'t go well. Can you do better?';
+
+function shareX() {
+  const url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(SHARE_TEXT + ' → ' + SHARE_URL);
+  window.open(url, '_blank');
+}
+function shareBsky() {
+  const url = 'https://bsky.app/intent/compose?text=' + encodeURIComponent(SHARE_TEXT + ' → ' + SHARE_URL);
+  window.open(url, '_blank');
+}
+function copyLink(btnId) {
+  navigator.clipboard.writeText(SHARE_URL).then(() => {
+    const btn = document.getElementById(btnId);
+    const orig = btn.innerHTML;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => { btn.innerHTML = orig; }, 2000);
+  });
+}
 
 function showBudget() { showScreen('screen-budget'); }
 function startGame()  { state = resetState(); renderRound(); showScreen('screen-round'); }
