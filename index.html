@@ -473,6 +473,14 @@
     }
     .verdict p + p { margin-top: 14px; }
 
+    .round-footnote {
+      font-size: 11px;
+      color: #AAAAAA;
+      line-height: 1.6;
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+
     /* ── Site footer ──────────────────────────────── */
     .site-footer {
       text-align: center;
@@ -686,8 +694,9 @@
     <div class="shortfall-card">
       <div class="sc-label">This year's social care overspend</div>
       <div class="sc-amount" id="sc-amount">£4.9m</div>
-      <div class="sc-desc" id="sc-desc">More people are expected to need care this year. Costs are projected to rise 7%. You must find this money.</div>
+      <div class="sc-desc" id="sc-desc">More people are expected to need care this year. Costs are projected to rise 7%<sup style="font-size:10px;color:#999;vertical-align:super;">*</sup>. You must find this money.</div>
     </div>
+    <p class="round-footnote">* Illustrative figure used for this simulation. The actual cash CAGR for adult social care in England was ~8.1% per year between 2019 and 2024. Source: Adult Social Care Finance Report, England: 2024 to 2025, NHS England / GOV.UK.</p>
 
     <div class="mini-budget-wrap">
       <div class="mini-budget-label">Social care share of total budget (growing)</div>
@@ -1050,8 +1059,8 @@ function renderRound() {
 
   const deficitNote = state.deficit > 0 ? ` (including £${state.deficit.toFixed(1)}m carried from last year's deficit)` : '';
   document.getElementById('sc-amount').textContent = `£${sf.toFixed(1)}m`;
-  document.getElementById('sc-desc').textContent =
-    `Social care costs are projected to rise 7% this year, adding £${(state.socialCare * SOCIAL_CARE_GROWTH).toFixed(1)}m to your bill${deficitNote}. You must find this money.`;
+  document.getElementById('sc-desc').innerHTML =
+    `Social care costs are projected to rise 7%<sup style="font-size:10px;color:#999;vertical-align:super;">*</sup> this year, adding £${(state.socialCare * SOCIAL_CARE_GROWTH).toFixed(1)}m to your bill${deficitNote}. You must find this money.`;
 
   const socialPct = Math.round((state.socialCare / 180) * 100);
   document.getElementById('mb-social').style.flexBasis = socialPct + '%';
