@@ -658,8 +658,9 @@
   <div class="wrap">
     <div class="tag">Before you start</div>
     <h2>Meet the item that<br><span>eats your budget.</span></h2>
-    <p class="body-text">Ask most people what councils spend their money on and they'll say bins, roads, parks. Here's the gap between what residents think — and what's actually true.</p>
+    <p class="body-text" style="margin-bottom:12px;">Ask most people what councils spend their money on and they'll say bins, roads, parks. Here's the gap between what residents think — and what's actually true.</p>
 
+    <p style="font-size:16px;line-height:1.8;color:#444;margin-bottom:24px;"><strong style="color:var(--text);">Adult social care</strong> funds support and services for adults with disabilities, long-term illness, or age-related frailty, helping them live safely and independently. It is the single largest item in most council budgets.</p>
     <div class="perception-row">
       <div class="perception-card">
         <div class="p-label">What residents think councils spend on adult social care</div>
@@ -675,9 +676,9 @@
 
     <div class="section-label">Where your £180m goes</div>
     <div class="budget-bar">
-      <div class="budget-seg" style="flex-basis:39%;background:var(--red);color:#fff;">39%</div>
-      <div class="budget-seg" style="flex-basis:22%;background:rgba(204,0,0,0.35);color:#fff;">22%</div>
-      <div class="budget-seg" style="flex-basis:10%;background:#CCCCCC;color:#fff;">10%</div>
+      <div class="budget-seg" style="flex-basis:39%;background:var(--red);color:#1A1A1A;">39%</div>
+      <div class="budget-seg" style="flex-basis:22%;background:rgba(204,0,0,0.35);color:#1A1A1A;">22%</div>
+      <div class="budget-seg" style="flex-basis:10%;background:#CCCCCC;color:#1A1A1A;">10%</div>
       <div class="budget-seg" style="flex-basis:7%;background:#DDDDDD;">7%</div>
       <div class="budget-seg" style="flex-basis:7%;background:#E5E5E5;"></div>
       <div class="budget-seg" style="flex-basis:4%;background:#EBEBEB;"></div>
@@ -719,10 +720,10 @@
   </div>
   <div class="wrap" style="padding-top:32px;">
     <div class="tag" id="round-tag">Year 1 — 2025/26</div>
-    <h2>Social care demand<br><span>is expected to rise. Again.</span></h2>
+    <h2>Adult social care demand<br><span>is expected to rise. Again.</span></h2>
 
     <div class="shortfall-card">
-      <div class="sc-label">This year's social care overspend</div>
+      <div class="sc-label">This year's adult social care overspend</div>
       <div class="sc-amount" id="sc-amount">£4.9m</div>
       <div class="sc-desc" id="sc-desc">More people are expected to need care this year. Costs are projected to rise 7%<sup style="font-size:10px;color:#999;vertical-align:super;">*</sup>. You must find this money.</div>
     </div>
@@ -1151,7 +1152,7 @@ function renderRound() {
   const deficitNote = state.deficit > 0 ? ` (including £${state.deficit.toFixed(1)}m carried from last year's deficit)` : '';
   document.getElementById('sc-amount').textContent = `£${sf.toFixed(1)}m`;
   document.getElementById('sc-desc').innerHTML =
-    `Social care costs are projected to rise 7%<sup style="font-size:10px;color:#999;vertical-align:super;">*</sup> this year, adding £${(state.socialCare * SOCIAL_CARE_GROWTH).toFixed(1)}m to your bill${deficitNote}. You must find this money.`;
+    `Adult social care costs are projected to rise 7%<sup style="font-size:10px;color:#999;vertical-align:super;">*</sup> this year, adding £${(state.socialCare * SOCIAL_CARE_GROWTH).toFixed(1)}m to your bill${deficitNote}. You must find this money.`;
 
   const socialPct = Math.round((state.socialCare / 180) * 100);
   document.getElementById('mb-social').style.flexBasis = socialPct + '%';
