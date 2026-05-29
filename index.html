@@ -17,6 +17,7 @@
       color: var(--color-main);
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     /* ── Brand ────────────────────────────────────── */
@@ -638,6 +639,21 @@
       line-height: 1.8;
       color: var(--muted);
       max-width: 580px;
+    }
+
+    /* ── Responsive ───────────────────────────────── */
+    @media (max-width: 640px) {
+      .wrap { padding: 40px 24px; }
+      #screen-intro .wrap { min-height: calc(100vh - 40px); }
+      .year-bar { padding: 24px 24px 0; }
+      .perception-row { grid-template-columns: 1fr; }
+      .ct-options { grid-template-columns: 1fr; }
+      .outcome-grid { grid-template-columns: 1fr; }
+      .round-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .verdict { padding: 28px 24px; }
+      .shortfall-card { padding: 20px 20px; }
+      .share-row { flex-direction: column; }
+      .btn-share { justify-content: center; }
     }
   </style>
 </head>
